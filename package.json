@@ -27,8 +27,11 @@
     "@capacitor/keyboard": "6.0.0",
     "@capacitor/status-bar": "6.0.0",
     "@ionic/angular": "^8.0.0",
+    "@ngx-translate/http-loader": "^8.0.0",
+    "ionic-cache": "^6.0.3",
+    "ionic-img-viewer": "^2.9.0",
     "ionicons": "^7.0.0",
-    "rxjs": "~7.8.0",
+    "rxjs": "^7.8.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
   },

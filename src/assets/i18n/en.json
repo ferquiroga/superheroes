@@ -1,0 +1,11 @@
+{
+    "main-page":{
+        "title": "List of superheroes"
+    },
+    "detail-page": {
+        "title": "Other information:",
+        "comics": "Comics available:",
+        "series": "Series available:",
+        "stories": "Stories available:"
+    }
+}

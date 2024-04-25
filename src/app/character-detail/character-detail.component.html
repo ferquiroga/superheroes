@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="title">
+      {{ character.name }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="character">
+     <div style="text-align: center">
+      <img [src]="url_image">
+    </div>
+   <div>
+    <div class="detail-title">{{ 'detail-page.title' | translate }}</div>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="10">
+          <div class="detail-content">{{ 'detail-page.comics' | translate }}</div>
+        </ion-col>
+        <ion-col size="2">
+          <div class="detail-content">{{ character.comics.available }}</div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="10">
+          <div class="detail-content">{{ 'detail-page.series' | translate }}</div>
+        </ion-col>
+        <ion-col size="2">
+          <div class="detail-content">{{ character.series.available }}</div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="10">
+          <div class="detail-content">{{ 'detail-page.stories' | translate }}</div>
+        </ion-col>
+        <ion-col size="2">
+          <div class="detail-content">{{ character.stories.available }}</div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

@@ -1,83 +1,20 @@
 import { Injectable } from '@angular/core';
-
-export interface Message {
-  fromName: string;
-  subject: string;
-  date: string;
-  id: number;
-  read: boolean;
-}
+import { HttpClient } from '@angular/common/http';
+import { CacheService } from "ionic-cache";
+import { map } from 'rxjs/internal/operators/map';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  public messages: Message[] = [
-    {
-      fromName: 'Matt Chorsey',
-      subject: 'New event: Trip to Vegas',
-      date: '9:32 AM',
-      id: 0,
-      read: false
-    },
-    {
-      fromName: 'Lauren Ruthford',
-      subject: 'Long time no chat',
-      date: '6:12 AM',
-      id: 1,
-      read: false
-    },
-    {
-      fromName: 'Jordan Firth',
-      subject: 'Report Results',
-      date: '4:55 AM',
-      id: 2,
-      read: false
-    },
-    {
-      fromName: 'Bill Thomas',
-      subject: 'The situation',
-      date: 'Yesterday',
-      id: 3,
-      read: false
-    },
-    {
-      fromName: 'Joanne Pollan',
-      subject: 'Updated invitation: Swim lessons',
-      date: 'Yesterday',
-      id: 4,
-      read: false
-    },
-    {
-      fromName: 'Andrea Cornerston',
-      subject: 'Last minute ask',
-      date: 'Yesterday',
-      id: 5,
-      read: false
-    },
-    {
-      fromName: 'Moe Chamont',
-      subject: 'Family Calendar - Version 1',
-      date: 'Last Week',
-      id: 6,
-      read: false
-    },
-    {
-      fromName: 'Kelly Richardson',
-      subject: 'Placeholder Headhots',
-      date: 'Last Week',
-      id: 7,
-      read: false
-    }
-  ];
+  characterKeyGroup = 'characterCacheGroup';
+  ttlCache = 60 * 60 * 24 * 30;
 
-  constructor() { }
+  constructor(private http: HttpClient, private cache: CacheService) { }
 
-  public getMessages(): Message[] {
-    return this.messages;
-  }
-
-  public getMessageById(id: number): Message {
-    return this.messages[id];
+  getCharacters() {
+    const url = 'https://gateway.marvel.com:443/v1/public/characters?ts=1&apikey=65f4d81fbff7b4bbb64334d24d92f184&hash=8c3f620440a9e41442f715109297a774';
+    let request = this.http.get<any>(url);
+    return this.cache.loadFromDelayedObservable(url, request, this.characterKeyGroup, this.ttlCache, 'all').pipe(map(res => res));
   }
 }

@@ -1,17 +1,24 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RefresherCustomEvent } from '@ionic/angular';
-import { MessageComponent } from '../message/message.component';
-
-import { DataService, Message } from '../services/data.service';
+import { DataService } from '../services/data.service';
+import { Character } from '../models/character.interface';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
-  private data = inject(DataService);
-  constructor() {}
+export class HomePage implements  OnInit{
+  private dataService = inject(DataService);
+  characters!: Character[];
+  data!: boolean;
+
+  constructor(public translate: TranslateService) {}
+
+  ngOnInit(): void {
+    this.getCharacters();
+  }
 
   refresh(ev: any) {
     setTimeout(() => {
@@ -19,7 +26,15 @@ export class HomePage {
     }, 3000);
   }
 
-  getMessages(): Message[] {
-    return this.data.getMessages();
+  getCharacters() {
+    this.dataService.getCharacters().subscribe(
+      (res) => {
+        this.characters = res.data.results;
+        this.data = true;
+      },
+      err => {
+        this.data = false;
+      }
+    )
   }
 }
